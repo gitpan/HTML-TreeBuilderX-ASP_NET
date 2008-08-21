@@ -9,7 +9,7 @@ sub BUILD {
 	Class::MOP::load_class('HTML::TreeBuilderX::ASP_NET');
 	HTML::Element->meta->add_method('httpRequest', sub {
 		my $self = shift;
-		HTML::TreeBuilderX::ASP_NET->new({ element=> $self })->press->as_string;
+		HTML::TreeBuilderX::ASP_NET->new({ element=> $self })->httpRequest;
 	});
 
 }

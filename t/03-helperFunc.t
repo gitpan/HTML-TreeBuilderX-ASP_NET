@@ -1,4 +1,4 @@
-use Test::More tests=>3;
+use Test::More tests=>4;
 use HTML::TreeBuilderX::ASP_NET;
 
 eval {
@@ -30,8 +30,9 @@ eval {
 };
 
 eval {
-	my $foo = HTML::TreeBuilderX::ASP_NET->new->can('httpResponse');
-	ok ( $foo, 'httpResponse alias for ->press is working' )
+	my $foo = HTML::TreeBuilderX::ASP_NET->new;
+	can_ok ( $foo, 'httpRequest' );
+	can_ok ( $foo, 'press' );
 };
 
 1;

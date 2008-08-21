@@ -6,7 +6,7 @@ use HTTP::Request::Form;
 use HTML::Element;
 use Carp;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use mro 'c3';
 with 'MooseX::Traits';
@@ -61,7 +61,7 @@ has 'baseURL' => ( isa => 'Maybe[URI]', is => 'ro' );
 
 has 'debug' => ( isa => 'Bool', is => 'ro', default => 0 );
 
-sub httpResponse {
+sub httpRequest {
 	my ( $self, @args ) = @_;
 	$self->press(@args);
 }
@@ -126,7 +126,11 @@ sub _build_hrf {
 sub parseDoPostBack {
 	my ($element) = @_;
 
-	$element->attr('href') =~ /__doPostBack\((.*)\)/;
+	(
+		$element->attr('href')
+		// $element->attr('onchange')
+	)  =~  /__doPostBack\((.*)\)/;
+
 	$1 =~ s/\\'/'/g;
 	my $args = $1;
 	my ( $eventTarget, $eventArgument ) = split /\s*,\s*/, $args;
@@ -188,19 +192,17 @@ HTML::TreeBuilderX::ASP_NET - Scrape ASP.NET/VB.NET sites which utilize Javascri
 		, baseURL =>$resp->request->uri ## takes into account posting redirects
 	});
 	my $resp = $ua->request( $aspnet->httpResponse );
-	
 
 	## or the easy cheating way see the SEE ALSO section for links
 	my $aspnet = HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
 	$form->look_down(_tag=> 'a')->httpResponse
-	
 =head1 DESCRIPTION
 
-Scrape ASP.NET sites which utilize the language's __VIEWSTATE, __EVENTTARGET, __EVENTARGUMENT, and __LASTFOCUS et al functionality. This module returns a HTTP::Response from the form with the use of the method httpResponse.
+Scrape ASP.NET sites which utilize the language's __VIEWSTATE, __EVENTTARGET, __EVENTARGUMENT, __LASTFOCUS, et al. This module returns a HTTP::Response from the form with the use of the method C<-E<gt>httpResponse>.
 
 In this scheme many of the links on a webpage will apear to be javascript functions. The default Javascript function is C<__doPostBack(eventTarget, eventArgument)>. ASP.NET has two hidden fields which record state: __VIEWSTATE, and __LASTFOCUS. It abstracts each link with a method that utilizes an HTTP post-back to the server. The Javascript behind C<__doPostBack> simply appends __EVENTTARGET=$eventTarget&__EVENTARGUMENT=$eventArgument onto the POST request from the parent form and submits it. When the server receives this request it decodes and decompresses the __VIEWSTATE and uses it along with the new __EVENTTARGET and __EVENTARGUMENT to perform the action, which is often no more than serializing the data back into the __VIEWSTATE.
 
-Some times developers cloak the C<__doPostBack(target,arg)> with names akin to C<changepage(arg)> which simply call C<__doPostBack("target", arg)>. This module will handle this use case as well using the explicit an eventTriggerArugment in the constructor.
+Sometimes developers cloak the C<__doPostBack(target,arg)> with names akin to C<changepage(arg)> which simply call C<__doPostBack("target", arg)>. This module will handle this use case as well using the explicit an eventTriggerArugment in the constructor.
 
 This flow is a bane on RESTLESS http and makes no sense whatsoever. Thanks Microsoft.
 
@@ -241,17 +243,7 @@ This flow is a bane on RESTLESS http and makes no sense whatsoever. Thanks Micro
 
 =head2 METHODS
 
-=over 4
-
-=item ->httpResponse
-
-Returns an L<HTTP::Response> object for the HTTP POST
-
-=back
-
-B< ALL OF THE METHODS FROM L<HTTP::Request::Form> >
-
-=head2 FUNCTIONS
+B< IN ADDITION TO ALL OF THE METHODS FROM L<HTTP::Request::Form> >
 
 =over 4
 
@@ -283,11 +275,27 @@ optional: Sets the base of the URL for the post action
 
 =back
 
-=item ->createInputElements( {eventTarget => eventArgument} )
+=item ->http::Request
+
+Returns an L<HTTP::Request> object for the HTTP POST
+
+=item ->hrf
+
+Explicitly call methods from the underlying L<HTTP::Request::Form> object. All methods are dispatched here anyway, but this will return that object directly.
+
+=back
+
+=head2 FUNCTIONS
+
+None of these are exported...
+
+=over 4
+
+=item createInputElements( {eventTarget => eventArgument} )
 
 Helper function takes two values in an HashRef. Assumes the key is the __EVENTTARGET and value the __EVENTARGUMENT, returns two L<HTML::Element> pseudo-input fields with the information.
 
-=item ->parseDoPostBack( $str )
+=item parseDoPostBack( $str )
 
 Accepts a string that is often the "href" attribute of an HTTP::Element. It simple parses out the call to Javascript, using regexes, and makes the two args useable to perl in the form of an HashRef.
 
@@ -308,6 +316,10 @@ For the object the method htmlElement returns
 =item L<HTTP::Request::Form>
 
 For a base class, to which all methods are valid
+
+=item HTML::Element
+
+For the base class of all HTML tokens
 
 =back
 
