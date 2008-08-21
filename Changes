@@ -1,5 +1,8 @@
 Revision history for HTML-TreeBuilderX-ASP_NET
 
+0.06    2008-08-21
+        This fixes the trait and args passing, w/ tests.
+
 0.05    2008-08-21
         This one is for a syntax error and a bad warning on test
 

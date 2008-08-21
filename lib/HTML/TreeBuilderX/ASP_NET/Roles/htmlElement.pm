@@ -8,9 +8,9 @@ sub BUILD {
 	
 	Class::MOP::load_class('HTML::TreeBuilderX::ASP_NET');
 	HTML::Element->meta->add_method('httpRequest', sub {
-		my ( $self, @args ) = @_;
+		my ( $self, $args ) = @_;
 		HTML::TreeBuilderX::ASP_NET
-			->new({ element=> $self, @args })
+			->new({ element=> $self, %{$args//{}} })
 			->httpRequest
 		;
 	});

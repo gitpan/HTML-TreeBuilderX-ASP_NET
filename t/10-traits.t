@@ -1,6 +1,8 @@
+use strict;
+use warnings;
 use HTML::TreeBuilderX::ASP_NET;
 use HTML::TreeBuilder;
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 my $html = q{
 	<form method="post" action="server.aspx">
@@ -23,14 +25,23 @@ eval {
 like ( $@, qr/<form>/, 'Success with use! (failed without the parent form)' );
 
 {
-	my $req;
 	HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
-	$req = HTML::TreeBuilder
+	my $req = HTML::TreeBuilder
 		->new_from_content($html)
 		->look_down( '_tag' => 'a' )
 		->httpRequest
 	;
 	is ( ref $req, 'HTTP::Request', 'Success with use! (type)' );
+}
+
+{
+	HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
+	my $req = HTML::TreeBuilder
+		->new_from_content($html)
+		->look_down( '_tag' => 'a' )
+		->httpRequest({ baseURL => URI->new('http://google.com') })
+	;
+	like ( $req->uri, qr/google/, 'Success with use! (args)' );
 }
 
 1;
