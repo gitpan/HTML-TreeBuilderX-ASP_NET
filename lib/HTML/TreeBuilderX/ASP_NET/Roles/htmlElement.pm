@@ -8,8 +8,11 @@ sub BUILD {
 	
 	Class::MOP::load_class('HTML::TreeBuilderX::ASP_NET');
 	HTML::Element->meta->add_method('httpRequest', sub {
-		my $self = shift;
-		HTML::TreeBuilderX::ASP_NET->new({ element=> $self })->httpRequest;
+		my ( $self, @args ) = @_;
+		HTML::TreeBuilderX::ASP_NET
+			->new({ element=> $self, @args })-
+			>httpRequest
+		;
 	});
 
 }
@@ -24,14 +27,14 @@ HTML::TreeBuilderX::ASP_NET::Roles::htmlElement -- An easy hack for HTML::Elemen
 
 =head1 DESCRPITION
 
-A simple 15 line module with a nicer more transparent API.
+A simple 15 line trait for L<HTML::TreeBuilderX::ASP_NET> with a nicer more transparent API. It adds the method C<-E<gt>httpRequest> to L<HTML::Element> objects that will return an L<HTTP::Request> that represents the state of the form. It reflects all of its arguments back to the L<HTML::TreeBuilderX::ASP_NET> constructor.
 
 =head1 SYNOPSIS
 
 	HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
 
 	## returns a HTTP::Request for the form
-	$root->look_down( '_tag' => 'a' )->httpRequest;
+	$root->look_down( '_tag' => 'a' )->httpRequest( $hashRef );
 
 =head1 SEE ALSO
 
