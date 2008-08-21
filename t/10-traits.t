@@ -18,7 +18,7 @@ ok ( !$@, 'htmlElement trait construction is good!!' );
 
 eval {
 	HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
-	$req = HTML::Element->new('a', href => "__doPostBack('foo','bar')" )->httpRequest;
+	HTML::Element->new('a', href => "__doPostBack('foo','bar')" )->httpRequest;
 };
 like ( $@, qr/<form>/, 'Success with use! (failed without the parent form)' );
 

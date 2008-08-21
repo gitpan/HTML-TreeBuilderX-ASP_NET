@@ -10,8 +10,8 @@ sub BUILD {
 	HTML::Element->meta->add_method('httpRequest', sub {
 		my ( $self, @args ) = @_;
 		HTML::TreeBuilderX::ASP_NET
-			->new({ element=> $self, @args })-
-			>httpRequest
+			->new({ element=> $self, @args })
+			->httpRequest
 		;
 	});
 

@@ -1,5 +1,8 @@
 Revision history for HTML-TreeBuilderX-ASP_NET
 
+0.05    2008-08-21
+        This one is for a syntax error and a bad warning on test
+
 0.04    2008-08-21
         Gah, I forgot to update pod.. I'm retarded.
 

@@ -6,7 +6,7 @@ use HTTP::Request::Form;
 use HTML::Element;
 use Carp;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use mro 'c3';
 with 'MooseX::Traits';

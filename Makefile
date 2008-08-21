@@ -18,7 +18,7 @@
 #     NO_META => q[1]
 #     PL_FILES => {  }
 #     PREREQ_PM => { Test::More=>q[0], Class::MOP=>q[0], ExtUtils::MakeMaker=>q[6.44], HTTP::Request::Form=>q[0], HTML::TreeBuilder=>q[0], MooseX::Traits=>q[0], Moose=>q[0] }
-#     VERSION => q[0.04]
+#     VERSION => q[0.05]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     test => { TESTS=>q[t/00-load.t t/01-bad_const.t t/02-good_const.t t/03-helperFunc.t t/10-traits.t t/boilerplate.t t/pod.t] }
 
@@ -59,11 +59,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = HTML::TreeBuilderX::ASP_NET
 NAME_SYM = HTML_TreeBuilderX_ASP_NET
-VERSION = 0.04
+VERSION = 0.05
 VERSION_MACRO = VERSION
-VERSION_SYM = 0_04
+VERSION_SYM = 0_05
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 0.04
+XS_VERSION = 0.05
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -258,7 +258,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = HTML-TreeBuilderX-ASP_NET
-DISTVNAME = HTML-TreeBuilderX-ASP_NET-0.04
+DISTVNAME = HTML-TreeBuilderX-ASP_NET-0.05
 
 
 # --- MakeMaker macro section:
@@ -768,7 +768,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0,04,0,0">' > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0,05,0,0">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <TITLE>$(DISTNAME)</TITLE>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT>Scrape ASP.NET/VB.NET sites which utilize Javascript POST-backs.</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Evan Carroll &lt;me@evancarroll.com&gt;</AUTHOR>' >> $(DISTNAME).ppd
