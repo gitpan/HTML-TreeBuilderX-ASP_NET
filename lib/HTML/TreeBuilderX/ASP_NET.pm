@@ -6,7 +6,7 @@ use HTTP::Request::Form;
 use HTML::Element;
 use Carp;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use mro 'c3';
 with 'MooseX::Traits';
@@ -196,6 +196,7 @@ HTML::TreeBuilderX::ASP_NET - Scrape ASP.NET/VB.NET sites which utilize Javascri
 	## or the easy cheating way see the SEE ALSO section for links
 	my $aspnet = HTML::TreeBuilderX::ASP_NET->new_with_traits( traits => ['htmlElement'] );
 	$form->look_down(_tag=> 'a')->httpResponse
+
 =head1 DESCRIPTION
 
 Scrape ASP.NET sites which utilize the language's __VIEWSTATE, __EVENTTARGET, __EVENTARGUMENT, __LASTFOCUS, et al. This module returns a HTTP::Response from the form with the use of the method C<-E<gt>httpResponse>.
@@ -275,13 +276,13 @@ optional: Sets the base of the URL for the post action
 
 =back
 
-=item ->http::Request
+=item ->httpRequest
 
 Returns an L<HTTP::Request> object for the HTTP POST
 
 =item ->hrf
 
-Explicitly call methods from the underlying L<HTTP::Request::Form> object. All methods are dispatched here anyway, but this will return that object directly.
+Explicitly return the underlying L<HTTP::Request::Form> object. All methods fallback here anyway, but this will return that object directly.
 
 =back
 
