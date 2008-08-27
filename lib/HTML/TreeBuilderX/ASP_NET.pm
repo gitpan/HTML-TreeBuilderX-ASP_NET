@@ -6,7 +6,7 @@ use HTTP::Request::Form;
 use HTML::Element;
 use Carp;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use mro 'c3';
 with 'MooseX::Traits';
@@ -71,7 +71,7 @@ sub _build_eventTriggerArgument {
 
 	Carp::croak
 		'User must provide an eventTriggerArgument, '
-	 . ' or an element to generate one from'
+		. ' or an element to generate one from'
 		unless $self->has_element
 	;
 
