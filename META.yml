@@ -21,6 +21,7 @@ requires:
   HTTP::Request::Form: 0
   Moose: 0
   MooseX::Traits: 0
+  perl: 5.01
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.07
+version: 0.08

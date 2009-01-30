@@ -1,4 +1,7 @@
 package HTML::TreeBuilderX::ASP_NET::Roles::htmlElement;
+use strict;
+use warnings;
+
 use Moose::Role;
 
 Moose::init_meta( 'HTML::Element' );

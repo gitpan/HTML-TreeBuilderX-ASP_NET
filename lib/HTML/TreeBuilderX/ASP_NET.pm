@@ -1,12 +1,15 @@
 package HTML::TreeBuilderX::ASP_NET;
+use 5.010;
 use Moose;
+use strict;
+use warnings;
 
 use Moose::Util::TypeConstraints;
 use HTTP::Request::Form;
 use HTML::Element;
 use Carp;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use mro 'c3';
 with 'MooseX::Traits';
