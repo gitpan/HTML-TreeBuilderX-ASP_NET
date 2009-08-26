@@ -1,10 +1,7 @@
-use Test::More tests => 7;
+use Test::More tests => 2;
 
-BEGIN { use_ok( 'Moose' ) }
-BEGIN { use_ok( 'HTML::TreeBuilderX::ASP_NET' ) }
-BEGIN { use_ok( 'HTML::Element' ) }
-BEGIN { use_ok( 'HTML::TreeBuilder' ) }
-BEGIN { use_ok( 'MooseX::Traits' ) }
+use HTML::TreeBuilderX::ASP_NET;
+use HTML::Element;
 
 {
 	eval { HTML::TreeBuilderX::ASP_NET->new->press };
